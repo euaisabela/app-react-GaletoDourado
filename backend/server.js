@@ -1,37 +1,37 @@
 const express = require('express');
-const nodemailer = require('nodemailer');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 require('dotenv').config();
+
+const Pedido = require('./models/Pedido');
+const Pagamento = require('./models/Pagamento');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Configurando o transportador de e-mail com Nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'Gmail', // ou outro serviço de e-mail (ex: Outlook)
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
+// Conectar ao MongoDB (certifique-se de ter a URL correta)
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-// Endpoint para enviar e-mail
-app.post('/send-email', async (req, res) => {
-  const { email, subject, message } = req.body;
-
+app.get('/relatorio-pedidos', async (req, res) => {
   try {
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: subject,
-      text: message,
-    });
-    res.status(200).send('E-mail enviado com sucesso!');
+    const pedidos = await Pedido.find();
+    res.status(200).json(pedidos);
   } catch (error) {
-    console.error('Erro ao enviar e-mail:', error);
-    res.status(500).send('Erro ao enviar e-mail');
+    res.status(500).send('Erro ao obter pedidos');
+  }
+});
+
+app.get('/relatorio-pagamentos', async (req, res) => {
+  try {
+    const pagamentos = await Pagamento.find();
+    res.status(200).json(pagamentos);
+  } catch (error) {
+    res.status(500).send('Erro ao obter pagamentos');
   }
 });
 

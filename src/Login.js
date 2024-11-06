@@ -76,7 +76,7 @@ export default function Login() { // Altere o nome para Login
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="#/esqueci-senha" variant="body2">
                   Esqueceu sua senha?
                 </Link>
               </Grid>
