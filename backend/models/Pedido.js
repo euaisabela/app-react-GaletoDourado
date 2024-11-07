@@ -9,6 +9,7 @@ const pedidoSchema = new mongoose.Schema({
 const Pedido = mongoose.model('Pedido', pedidoSchema);
 
 module.exports = Pedido;
+<<<<<<< HEAD
 
 import React from 'react';
 
@@ -31,3 +32,5 @@ function ListaDePedidos() {
 }
 
 export default ListaDePedidos;
+=======
+>>>>>>> 3c8270c51e7d5949af545ec5a38a331ca7ea297c
