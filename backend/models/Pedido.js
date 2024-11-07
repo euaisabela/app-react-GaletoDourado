@@ -9,3 +9,25 @@ const pedidoSchema = new mongoose.Schema({
 const Pedido = mongoose.model('Pedido', pedidoSchema);
 
 module.exports = Pedido;
+
+import React from 'react';
+
+function ListaDePedidos() {
+    return (
+        <div>
+            <h2>Lista de Pedidos</h2>
+            <ul>
+                {pedidos.map((pedido, index) => (
+                    <li key={pedido.id}>
+                        <p>Pedido #{index + 1}</p>
+                        <p>Data: {pedido.data}</p>
+                        <p>Total: R$ {pedido.total.toFixed(2)}</p>
+                        <p>Status: {pedido.status}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+
+export default ListaDePedidos;

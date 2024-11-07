@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import data from "./moc.json"
 
 export default function Dashboard() {
-  const [pedidos, setPedidos] = useState([]);
+  const [pedidos, setPedidos] = useState(data);
   const [pagamentos, setPagamentos] = useState([]);
   const navigate = useNavigate();
 
@@ -34,8 +35,8 @@ export default function Dashboard() {
 
       <h2>Relatório de Pedidos</h2>
       <ul>
-        {pedidos.map((pedido) => (
-          <li key={pedido._id}>Pedido de {pedido.data} - Total: {pedido.total} - Status: {pedido.status}</li>
+        {pedidos.map((pedido , index) => (
+          <li key={pedido._id}>{index} Pedido de {pedido.data} - Total: {pedido.total} - Status: {pedido.status}</li>
         ))}
       </ul>
 
