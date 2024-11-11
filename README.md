@@ -7,3 +7,6 @@
 )
 #EMTÃO ABRI OUTRO TEMRMAL ( SEM SER O DO SERVERMODE ) E DIGITEI
 # npm install axios
+
+BACO DE DADOS USADO 
+![image](https://github.com/user-attachments/assets/f341536c-becd-4ec9-b406-6057dbbebd41)
