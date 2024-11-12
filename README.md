@@ -7,3 +7,12 @@
 )
 #EMTÃO ABRI OUTRO TEMRMAL ( SEM SER O DO SERVERMODE ) E DIGITEI
 # npm install axios
+
+BACO DE DADOS USADO 
+![image](https://github.com/user-attachments/assets/f341536c-becd-4ec9-b406-6057dbbebd41)
+
+
+Utilizado bamco de dados MomgoDB
+
+![image](https://github.com/user-attachments/assets/ced0bdec-39e9-4543-b485-286c360d6598)
+
