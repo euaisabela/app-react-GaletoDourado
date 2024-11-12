@@ -9,7 +9,7 @@ const Pagamento = require('./models/Pagamento');
 const Usuario = require('./models/Usuario'); // Modelo de Usuário
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(bodyParser.json());
 
 // Conectar ao MongoDB usando a string de conexão do Atlas
@@ -76,4 +76,31 @@ app.post('/cadastrar-usuario', async (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
+});
+
+const jwt = require('jsonwebtoken'); // Certifique-se de que jwt está instalado
+
+// Rota de login
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email e senha são obrigatórios.' });
+  }
+
+  try {
+    // Verificar se o usuário existe
+    const usuario = await Usuario.findOne({ email });
+    if (!usuario || usuario.password !== password) { 
+      return res.status(401).json({ message: 'Credenciais inválidas.' });
+    }
+
+    // Gerar o token JWT
+    const token = jwt.sign({ id: usuario._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.status(200).json({ message: 'Login realizado com sucesso!', token });
+  } catch (error) {
+    console.error('Erro ao fazer login:', error);
+    res.status(500).json({ message: 'Erro no servidor. Tente novamente.' });
+  }
 });
