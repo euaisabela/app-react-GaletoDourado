@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import data from "./moc.json";
 import './Dashboard.css'; // Arquivo de estilo separado
+import jsPDF from 'jspdf';
 
 export default function Dashboard() {
   const [pedidos, setPedidos] = useState(data);
@@ -24,6 +25,25 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     navigate('/');
+  };
+
+  // Função para gerar PDF
+  const gerarPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Relatório de Vendas", 10, 10);
+    
+    // Conteúdo exemplo de pedidos
+    pedidos.forEach((pedido, index) => {
+      doc.text(`${index + 1}. Pedido: ${pedido.data} - Total: ${pedido.total} - Status: ${pedido.status}`, 10, 20 + index * 10);
+    });
+
+    // Conteúdo exemplo de pagamentos
+    doc.text("Pagamentos:", 10, 40 + pedidos.length * 10);
+    pagamentos.forEach((pagamento, index) => {
+      doc.text(`${index + 1}. Pagamento: ${pagamento.data} - Valor: ${pagamento.valor} - Método: ${pagamento.metodo}`, 10, 50 + (pedidos.length + index) * 10);
+    });
+
+    doc.save('relatorio.pdf');
   };
 
   return (
@@ -69,6 +89,18 @@ export default function Dashboard() {
         <div className={`section ${activeSection === 'relatorios' ? 'active' : ''}`}>
           <h2>Relatórios</h2>
           <p>Relatórios de vendas e outros dados importantes.</p>
+          <Button variant="contained" color="primary" onClick={gerarPDF}>
+            Gerar PDF
+          </Button>
+          <div className="legenda">
+            <h3>Legenda:</h3>
+            <ul>
+              <li><span className="legenda-item" style={{ backgroundColor: '#90caf9' }}></span> Investimento</li>
+              <li><span className="legenda-item" style={{ backgroundColor: '#1e88e5' }}></span> Perda</li>
+              <li><span className="legenda-item" style={{ backgroundColor: '#673ab7' }}></span> Lucro</li>
+              <li><span className="legenda-item" style={{ backgroundColor: '#ede7f6' }}></span> Manutenção</li>
+            </ul>
+          </div>
         </div>
 
         <div className={`section ${activeSection === 'configuracoes' ? 'active' : ''}`}>

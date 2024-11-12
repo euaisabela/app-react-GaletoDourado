@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const nodemailer = require('nodemailer'); // Para envio de emails
 require('dotenv').config();
 
 const Pedido = require('./models/Pedido');
@@ -24,6 +25,36 @@ mongoose.connect(process.env.MONGODB_URI, {
   .catch((err) => {
     console.error("Erro ao conectar ao MongoDB: ", err);
   });
+
+// Configuração do transportador de email usando Nodemailer
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: process.env.EMAIL_USER,  // seu email
+    pass: process.env.EMAIL_PASS   // sua senha
+  }
+});
+
+// Rota para envio de email de recuperação de senha
+app.post('/send-email', async (req, res) => {
+  const { email, subject, message } = req.body;
+
+  try {
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject,
+      text: message
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: 'Email enviado com sucesso!' });
+  } catch (error) {
+    console.error('Erro ao enviar email:', error);
+    res.status(500).json({ message: 'Erro ao enviar o email. Tente novamente.' });
+  }
+});
+
 
 // Rota para obter os pedidos
 app.get('/relatorio-pedidos', async (req, res) => {
@@ -102,5 +133,15 @@ app.post('/login', async (req, res) => {
   } catch (error) {
     console.error('Erro ao fazer login:', error);
     res.status(500).json({ message: 'Erro no servidor. Tente novamente.' });
+  }
+});
+
+app.get('/api/pedidos', async (req, res) => {
+  try {
+    const pedidos = await Pedido.find(); // Usa o modelo Pedido corretamente
+    res.status(200).json(pedidos);
+  } catch (error) {
+    console.error('Erro ao obter pedidos:', error);
+    res.status(500).json({ message: 'Erro ao obter pedidos' });
   }
 });
