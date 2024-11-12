@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './Login'; // Seu componente de Login
-import ForgotPassword from './ForgotPassword'; // Seu componente de Recuperação de Senha
-import Cadastro from './Cadastro'; // Seu componente de Cadastro
-import Dashboard from './Dashboard'; // Componente para o Dashboard
+import Login from './Login'; 
+import ForgotPassword from './ForgotPassword'; 
+import Cadastro from './Cadastro'; 
+import Dashboard from './Dashboard'; 
 
 function App() {
   return (
@@ -11,6 +11,7 @@ function App() {
       <Routes>
         {/* Página de Login */}
         <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         
         {/* Página de Recuperação de Senha */}
         <Route path="/esqueci-senha" element={<ForgotPassword />} />

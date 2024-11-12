@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,6 +11,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
+
+const theme = createTheme();
 
 function Copyright() {
   return (
@@ -24,9 +27,34 @@ function Copyright() {
   );
 }
 
-const theme = createTheme();
+export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-export default function Login() { // Altere o nome para Login
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        alert(error.message || 'Erro no login. Tente novamente.');
+      } else {
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      alert('Erro no servidor, tente novamente.');
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -45,7 +73,7 @@ export default function Login() { // Altere o nome para Login
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 1 }}>
+          <Box component="form" noValidate onSubmit={handleLogin} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -55,6 +83,8 @@ export default function Login() { // Altere o nome para Login
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -65,6 +95,8 @@ export default function Login() { // Altere o nome para Login
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Button
               type="submit"

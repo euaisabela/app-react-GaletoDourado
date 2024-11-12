@@ -1,4 +1,3 @@
-// Cadastro.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import Avatar from '@mui/material/Avatar';
@@ -10,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Container from '@mui/material/Container';
+import Alert from '@mui/material/Alert'; // Importar Alert para mostrar mensagens de erro ou sucesso
+import axios from 'axios'; // Importar axios para enviar a requisição HTTP
 
 const theme = createTheme();
 
@@ -17,15 +18,49 @@ export default function Cadastro() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // Estado para mensagem de erro
+  const [loading, setLoading] = useState(false); // Estado para controlar a submissão do formulário
   const navigate = useNavigate(); // Criar um hook de navegação
 
-  const handleSubmit = (e) => {
+  // Função de validação de e-mail
+  const isValidEmail = (email) => {
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return regex.test(email);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Aqui você pode fazer a lógica de cadastro, como enviar para um backend
+    // Verificar se o nome, email e senha são válidos
+    if (!name || !email || !password) {
+      setError('Todos os campos são obrigatórios.');
+      return;
+    }
 
-    // Redirecionar para a página inicial após o cadastro
-    navigate('/'); // Redireciona para a rota da página inicial
+    if (!isValidEmail(email)) {
+      setError('Por favor, insira um e-mail válido.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('A senha deve ter pelo menos 6 caracteres.');
+      return;
+    }
+
+    setError(''); // Limpar erros anteriores
+    setLoading(true); // Iniciar carregamento
+
+    try {
+      // Enviar dados para o backend para cadastro
+      await axios.post('http://localhost:5000/cadastrar-usuario', { name, email, password });
+
+      // Redirecionar para a página inicial após o cadastro
+      navigate('/'); // Redireciona para a página inicial após o sucesso
+    } catch (err) {
+      setError('Ocorreu um erro ao criar a conta. Tente novamente.');
+    } finally {
+      setLoading(false); // Finalizar carregamento
+    }
   };
 
   return (
@@ -39,6 +74,10 @@ export default function Cadastro() {
           <Typography component="h1" variant="h5">
             Cadastro
           </Typography>
+          
+          {/* Exibição de erro */}
+          {error && <Alert severity="error">{error}</Alert>}
+
           <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={handleSubmit}>
             <TextField
               margin="normal"
@@ -75,8 +114,14 @@ export default function Cadastro() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-              Criar conta
+            <Button 
+              type="submit" 
+              fullWidth 
+              variant="contained" 
+              sx={{ mt: 3, mb: 2 }} 
+              disabled={loading}
+            >
+              {loading ? 'Criando conta...' : 'Criar conta'}
             </Button>
           </Box>
         </Box>
