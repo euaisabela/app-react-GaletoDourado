@@ -22,6 +22,7 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
+  height: 100%;
 }
 
 .sidebar h2 {
@@ -53,6 +54,7 @@
 .content h1 {
   font-size: 2em;
   margin-bottom: 20px;
+  color: brown;
 }
 
 /* Estilo para exibir seções específicas */
@@ -67,31 +69,105 @@
 /* Media queries para telas menores, como celulares */
 @media (max-width: 768px) {
   .dashboard {
-      flex-direction: column;
+    flex-direction: column;
   }
 
   .sidebar {
-      width: 100%;
-      flex-direction: row;
-      padding: 10px;
-      overflow-x: auto;
+    width: 100%;
+    flex-direction: row;
+    padding: 10px;
+    overflow-x: auto;
+    justify-content: space-around; /* Alinha os links na sidebar */
   }
 
   .sidebar h2 {
-      font-size: 1em;
-      margin-bottom: 0;
+    font-size: 1em;
+    margin-bottom: 0;
   }
 
   .nav-link {
-      padding: 10px;
-      font-size: 0.9em;
+    padding: 10px;
+    font-size: 0.9em;
   }
 
   .content {
-      padding: 10px;
+    padding: 10px;
   }
 
   .content h1 {
-      font-size: 1.5em;
+    font-size: 1.5em;
   }
+}
+
+.section {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
+.section h2 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.section p {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+/* Melhorar a aparência dos botões */
+.button, .legenda ul {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #f33a0c;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #e63946;
+}
+
+.legenda {
+  margin-top: 20px;
+}
+
+.legenda h3 {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 1.1em;
+}
+
+.legenda ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.legenda li {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.legenda-item {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 4px;
 }

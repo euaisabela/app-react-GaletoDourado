@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './Login'; 
-import ForgotPassword from './ForgotPassword'; 
 import Cadastro from './Cadastro'; 
 import Dashboard from './Dashboard'; 
+import RelatorioPagamentos from './RelatorioPagamentos'; 
+import Usuarios from './Usuarios';  
 
 function App() {
   return (
@@ -11,16 +12,18 @@ function App() {
       <Routes>
         {/* Página de Login */}
         <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        
-        {/* Página de Recuperação de Senha */}
-        <Route path="/esqueci-senha" element={<ForgotPassword />} />
         
         {/* Página de Cadastro */}
         <Route path="/cadastro" element={<Cadastro />} />
+
+        {/* Página de Relatório de Pagamentos */}
+        <Route path="/relatorio-pagamentos" element={<RelatorioPagamentos />} />
         
-        {/* Página do Dashboard - Somente para usuários autenticados */}
+        {/* Página do Dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* Página de Usuários */}
+        <Route path="/usuarios" element={<Usuarios />} /> 
       </Routes>
     </Router>
   );

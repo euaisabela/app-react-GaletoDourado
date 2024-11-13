@@ -30,8 +30,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: process.env.EMAIL_USER,  // seu email
-    pass: process.env.EMAIL_PASS   // sua senha
+    user: process.env.EMAIL_USER,  
+    pass: process.env.EMAIL_PASS   
   }
 });
 
@@ -70,7 +70,14 @@ app.get('/relatorio-pedidos', async (req, res) => {
 app.get('/relatorio-pagamentos', async (req, res) => {
   try {
     const pagamentos = await Pagamento.find();
-    res.status(200).json(pagamentos);
+
+    // Somar os valores dos pagamentos
+    const totalPagamentos = pagamentos.reduce((total, pagamento) => {
+      return total + pagamento.valor;
+    }, 0);
+
+    // Retornar os pagamentos e o total
+    res.status(200).json({ pagamentos, totalPagamentos });
   } catch (error) {
     res.status(500).send('Erro ao obter pagamentos');
   }
@@ -145,3 +152,16 @@ app.get('/api/pedidos', async (req, res) => {
     res.status(500).json({ message: 'Erro ao obter pedidos' });
   }
 });
+
+// Rota para obter todos os usuários cadastrados
+app.get('/usuarios', async (req, res) => {
+  try {
+    const usuarios = await Usuario.find();  // Buscar todos os usuários no banco de dados
+    res.status(200).json(usuarios);  // Retorna a lista de usuários
+  } catch (error) {
+    console.error('Erro ao obter usuários:', error);
+    res.status(500).json({ message: 'Erro ao obter usuários' });
+  }
+});
+
+
