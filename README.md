@@ -9,10 +9,16 @@ Exportação de Relatórios em PDF: Opção de exportar dados em PDF.
 Envio para WhatsApp: Envio rápido de relatórios diretamente para o WhatsApp.
 Visualização Gráfica: Gráficos para acompanhamento de dados de vendas.
 Customização para Mobile: Interface responsiva adaptada para uso em dispositivos móveis.
+
+
 🚀 Tecnologias Utilizadas
 Frontend: React com Material-UI para estilização
 Backend: Node.js com Express
 Banco de Dados: MongoDB (MongoDB Atlas) para armazenamento de dados
+
+![image](https://github.com/user-attachments/assets/238f88e1-605f-4e96-9282-7a91aa17bbdf)
+![image](https://github.com/user-attachments/assets/4d4cdbf6-fca0-4bdf-9f78-1946ebdce21d)
+
 Gerador de PDF: jsPDF para exportação de relatórios
 Gráficos: ApexCharts para exibir dados de pedidos por dia da semana
 📂 Estrutura do Projeto
