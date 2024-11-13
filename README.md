@@ -21,6 +21,13 @@ Banco de Dados: MongoDB (MongoDB Atlas) para armazenamento de dados
 
 Gerador de PDF: jsPDF para exportação de relatórios
 Gráficos: ApexCharts para exibir dados de pedidos por dia da semana
+
+
+![image](https://github.com/user-attachments/assets/86b81dfa-961d-4363-9b7f-cf0d17357361)
+
+![image](https://github.com/user-attachments/assets/aee2afa0-9183-4d47-aebb-4d92c786f41c)
+
+
 📂 Estrutura do Projeto
 plaintext
 Copiar código
