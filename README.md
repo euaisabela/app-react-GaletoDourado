@@ -1,4 +1,4 @@
-Galeto Dourado - Dashboard Interno para Restaurante
+*Galeto Dourado - Dashboard Interno para Restaurante
 O Galeto Dourado é um aplicativo desenvolvido para o uso interno de um restaurante, facilitando o gerenciamento de pedidos, pagamentos e relatórios diretamente em um painel administrativo acessível em dispositivos móveis e desktops.
 
 📋 Funcionalidades
